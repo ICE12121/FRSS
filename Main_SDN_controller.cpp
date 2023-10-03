@@ -137,13 +137,14 @@ std::vector<int> getRSSIValues() {
 }
 
 ////////////////////////////////////////   Check Speed /////////////////////////////////////////////////////////////////
-std::array<int, 3> CheckSpeed() {
+std::array<double, 3> CheckSpeed() {
     // Run the Speedtest CLI and capture its output
     std::string cmd = "speedtest-cli --simple";
     FILE *pipe = popen(cmd.c_str(), "r");
     if (!pipe) {
         std::cerr << "Error: Couldn't open the Speedtest CLI process." << std::endl;
-        // return EXIT_FAILURE;
+        // Return default values as doubles
+        return { -1.0, -1.0, -1.0 };
     }
 
     // Read the output
@@ -158,26 +159,27 @@ std::array<int, 3> CheckSpeed() {
     // Close the Speedtest CLI process
     pclose(pipe);
 
-    // Parse the result to extract ping and data rate values
-    int ping = -1;         // Initialize with a default value
-    int downloadRate = -1; // Initialize with a default value
-    int uploadRate = -1;   // Initialize with a default value
+    // Parse the result to extract ping and data rate values as doubles
+    double ping = -1.0;         // Initialize with a default value
+    double downloadRate = -1.0; // Initialize with a default value
+    double uploadRate = -1.0;   // Initialize with a default value
 
     char *token = strtok(const_cast<char *>(result.c_str()), "\n");
     while (token != nullptr) {
         if (strstr(token, "Ping:")) {
-            sscanf(token, "Ping: %d.%*d ms", &ping);
+            sscanf(token, "Ping: %lf.%*lf ms", &ping);
         } else if (strstr(token, "Download:")) {
-            sscanf(token, "Download: %d.%*d Mbit/s", &downloadRate);
+            sscanf(token, "Download: %lf.%*lf Mbit/s", &downloadRate);
         } else if (strstr(token, "Upload:")) {
-            sscanf(token, "Upload: %d.%*d Mbit/s", &uploadRate);
+            sscanf(token, "Upload: %lf.%*lf Mbit/s", &uploadRate);
         }
         token = strtok(nullptr, "\n");
     }
 
-    std::array<int, 3> result_value = {ping, downloadRate, uploadRate};
-    return result_value;
+    // Create and return a std::array of doubles
+    return { ping, downloadRate, uploadRate };
 }
+
 
 ///////////////////////////////////////////// Random function for user priority ////////////////////////////////////
 float random_pri() {
@@ -245,16 +247,16 @@ int main() {
     }
 
     ///////////////////////////////////  Get Data rate from WiFi ///////////////////////////////////////
-    std::array<int, 3> GetSpeed_wifi = CheckSpeed();
-    int ping_wifi = GetSpeed_wifi[0];
-    int downloadRate_wifi = GetSpeed_wifi[1];
-    int uploadRate_wifi = GetSpeed_wifi[2];
-
+    std::array<double, 3> GetSpeed_wifi = CheckSpeed();
+    double ping_wifi = GetSpeed_wifi[0];
+    double downloadRate_wifi = GetSpeed_wifi[1];
+    double uploadRate_wifi = GetSpeed_wifi[2];
+    double SE_wifi = ((downloadRate_wifi + uploadRate_wifi)/2 )/100;
     printf("Data rate -- Wifi\n");
     if (ping_wifi != -1 && downloadRate_wifi != -1 && uploadRate_wifi != -1) {
-        printf("# Ping: %d ms\n", ping_wifi);
-        printf("# Download Rate: %d Mbit/s\n", downloadRate_wifi);
-        printf("# Upload Rate: %d Mbit/s\n", uploadRate_wifi);
+        printf("# Ping: %.1f ms\n", ping_wifi);
+        printf("# Download Rate: %.2f Mbit/s\n", downloadRate_wifi);
+        printf("# Upload Rate: %.2f Mbit/s\n", uploadRate_wifi);
     } else {
         fprintf(stderr, "Error: Unable to parse Speedtest result.\n");
     }
@@ -291,16 +293,16 @@ int main() {
 
     ///////////////////////////////////  Get Data rate from Sim ///////////////////////////////////////
 
-    std::array<int, 3> GetSpeed_4G = CheckSpeed();
-    int ping_4G = GetSpeed_4G[0];
-    int downloadRate_4G = GetSpeed_4G[1];
-    int uploadRate_4G = GetSpeed_4G[2];
-
+    std::array<double, 3> GetSpeed_4G = CheckSpeed();
+    double ping_4G = GetSpeed_4G[0];
+    double downloadRate_4G = GetSpeed_4G[1];
+    double uploadRate_4G = GetSpeed_4G[2];
+    double SE_4G = ((downloadRate_4G + uploadRate_4G)/2 )/100;
     printf("Data rate -- 4G\n");
     if (ping_4G != -1 && downloadRate_4G != -1 && uploadRate_4G != -1) {
-        printf("# Ping: %d ms\n", ping_4G);
-        printf("# Download Rate: %d Mbit/s\n", downloadRate_4G);
-        printf("# Upload Rate: %d Mbit/s\n", uploadRate_4G);
+        printf("# Ping: %.1f ms\n", ping_4G);
+        printf("# Download Rate: %.1f Mbit/s\n", downloadRate_4G);
+        printf("# Upload Rate: %.1f Mbit/s\n", uploadRate_4G);
     } else {
         fprintf(stderr, "Error: Unable to parse Speedtest result.\n");
     }
@@ -317,14 +319,18 @@ int main() {
     printf("Switched to WiFi connection.\n");
 
     /////////////////////////////////////////////////  user priority //////////////////////////////////////////
-    printf("#### Calculate user priority #####\n");
-    float user_pri = random_pri();
-    printf("User priority : %.2f\n", user_pri);
+    printf("#### Calculate and preparing CV, SE, UP #####\n");
+    double UP = random_pri();
+    printf("User priority : %.2f\n", UP);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////       Makng decison part (Fuzzy)         ////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // (wifi)downloadRate_wifi, uploadRate_wifi, rssi --->calibrate --> (0,1)
+    //  (4G)  dbm, downloadRate_4G, uploadRate_4G ----> calibrate -->(0,1)
+ 
+    printf("SE_wifi = %.2f <--- DL=%.2f, UL=%.2f   \n", SE_wifi, downloadRate_wifi, uploadRate_wifi);
+    printf("SE_4G = %.2f <--- DL=%.2f, UL=%.2f   \n", SE_4G, downloadRate_4G, uploadRate_4G);
     
     // Fuzzy_decision(user_pri)
 
