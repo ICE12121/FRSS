@@ -200,27 +200,27 @@ float random_pri() {
 
 
 ///////////////////   Fuzzy function /////////////////////////////////////////////////////////
-double Fuzzy_decision(double CV,double UP,double SE) {
-	double RAT;
-	// FILE *fp;
+// double Fuzzy_decision(double CV,double UP,double SE) {
+// 	double RAT;
+// 	// FILE *fp;
 
-	ambgInit();
-	// fp=fopen("result","w");
+// 	ambgInit();
+// 	// fp=fopen("result","w");
 
-	// for(CV=0.1;CV <= 1.0;CV += 0.4){
-	// 	for(UP=0.1;UP <= 1.0;UP += 0.4){
-	// 		for(SE=0;SE <= 1;SE += 0.1){
-					RAT=ambgRun(3,CV,UP,SE);
-					// fprintf(fp,"%.4f\n",RAT);
-			// }
-	//	}
-	//}
+// 	// for(CV=0.1;CV <= 1.0;CV += 0.4){
+// 	// 	for(UP=0.1;UP <= 1.0;UP += 0.4){
+// 	// 		for(SE=0;SE <= 1;SE += 0.1){
+// 					RAT=ambgRun(3,CV,UP,SE);
+// 					// fprintf(fp,"%.4f\n",RAT);
+// 			// }
+// 	//	}
+// 	//}
 	
-	ambgDestroy();
-	// fclose(fp);
+// 	ambgDestroy();
+// 	// fclose(fp);
 
-	return RAT;
-}
+// 	return RAT;
+// }
 
 ////////////////////////   Main processing //////////////////////////////////////
 int main() {
