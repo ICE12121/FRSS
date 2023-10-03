@@ -1,0 +1,77 @@
+[system]
+Name='FLC'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=27
+AndMethod='min'
+OrMethod="max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='CV'
+Range=[0 1]
+NumMFs=3
+MF1='Sm':'trapmf',[0 0 0.1 0.4]
+MF2='In':'trapmf',[0 0.4 0.6 0.9]
+MF3='Bi':'trapmf',[0.6 0.9 1 1]
+
+[Input2]
+Name='UP'
+Range=[0 1]
+NumMFs=3
+MF1='Lw':'trapmf',[0 0 0.05 0.45]
+MF2='Md':'trimf',[0.05 0.5 0.95]
+MF3='Hg':'trapmf',[0.5 0.95 1 1]
+
+[Input3]
+Name='SE'
+Range=[0 1]
+NumMFs=3
+MF1='Lo':'trapmf',[0 0 0.1 0.5]
+MF2='Mu':'trimf',[0.1 0.5 0.9]
+MF3='Hi':'trapmf',[0.5 0.9 1 1]
+
+[Output1]
+Name='RDV'
+Range=[0 1]
+NumMFs=7
+MF1='RDV1':'trapmf',[0 0 0.05 0.2]
+MF2='RDV2':'trimf',[0.05 0.2 0.35]
+MF3='RDV3':'trimf',[0.2 0.35 0.5]
+MF4='RDV4':'trimf',[0.35 0.5 0.65]
+MF5='RDV5':'trimf',[0.5 0.65 0.8]
+MF6='RDV6':'trimf',[0.65 0.8 0.95]
+MF7='RDV7':'trapmf',[0.8 0.95 1 1]
+
+[Rules]
+1 1 1, 1 (1) : 1
+1 1 2, 2 (1) : 1
+1 1 3, 3 (1) : 1
+1 2 1, 2 (1) : 1
+1 2 2, 3 (1) : 1
+1 2 3, 4 (1) : 1
+1 3 1, 3 (1) : 1
+1 3 2, 4 (1) : 1
+1 3 3, 5 (1) : 1
+2 1 1, 2 (1) : 1
+2 1 2, 3 (1) : 1
+2 1 3, 4 (1) : 1
+2 2 1, 3 (1) : 1
+2 2 2, 4 (1) : 1
+2 2 3, 5 (1) : 1
+2 3 1, 4 (1) : 1
+2 3 2, 5 (1) : 1
+2 3 3, 6 (1) : 1
+3 1 1, 3 (1) : 1
+3 1 2, 4 (1) : 1
+3 1 3, 5 (1) : 1
+3 2 1, 4 (1) : 1
+3 2 2, 5 (1) : 1
+3 2 3, 6 (1) : 1
+3 3 1, 5 (1) : 1
+3 3 2, 6 (1) : 1
+3 3 3, 7 (1) : 1
