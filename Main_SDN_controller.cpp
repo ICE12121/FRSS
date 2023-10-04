@@ -234,7 +234,7 @@ int main() {
     int loop_n=0;
     printf("Enter number of Collecting RAT info.: ");
     std::cin>>loop_n;
-    for(int count=0;count<=loop_n;count++){
+    for(int count=1;count<=loop_n;count++){
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////       Collect Data from all RAT         ////////////////////////////////////////////////
@@ -262,7 +262,6 @@ int main() {
     double downloadRate_wifi = GetSpeed_wifi[1];
     double uploadRate_wifi = GetSpeed_wifi[2];
     double SE_wifi = ((downloadRate_wifi + uploadRate_wifi)/2 )/100;
-    printf("Data rate -- Wifi\n");
     if (ping_wifi != -1 && downloadRate_wifi != -1 && uploadRate_wifi != -1) {
         printf("# Ping: %.1f ms\n", ping_wifi);
         printf("# Download Rate: %.2f Mbit/s\n", downloadRate_wifi);
@@ -308,7 +307,6 @@ int main() {
     double downloadRate_4G = GetSpeed_4G[1];
     double uploadRate_4G = GetSpeed_4G[2];
     double SE_4G = ((downloadRate_4G + uploadRate_4G)/2 )/100;
-    printf("Data rate -- 4G\n");
     if (ping_4G != -1 && downloadRate_4G != -1 && uploadRate_4G != -1) {
         printf("# Ping: %.1f ms\n", ping_4G);
         printf("# Download Rate: %.1f Mbit/s\n", downloadRate_4G);
@@ -329,9 +327,9 @@ int main() {
     printf("Switched to WiFi connection.\n");
 
     /////////////////////////////////////////////////  user priority //////////////////////////////////////////
-    printf("#### Calculate and preparing CV, SE, UP #####\n");
+    printf("#### Calculate and preparing CV, SE, UP [%d] ##### \n",count);
     double UP = random_pri();
-    printf("User priority : %.2f\n", UP);
+    printf("User priority (UP) : %.2f\n", UP);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////       Makng decison part (Fuzzy)         ////////////////////////////////////////////////
