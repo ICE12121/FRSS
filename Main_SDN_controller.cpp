@@ -202,35 +202,34 @@ float random_pri() {
 
 
 ///////////////////   Fuzzy function /////////////////////////////////////////////////////////
-// double Fuzzy_decision(double CV,double UP,double SE) {
-// 	double RAT;
-// 	// FILE *fp;
+double Fuzzy_decision(double CV,double UP,double SE) {
+	double RAT=0;
+	// FILE *fp;
 
-// 	ambgInit();
-// 	// fp=fopen("result","w");
+	ambgInit();
+	// fp=fopen("result","w");
 
-// 	// for(CV=0.1;CV <= 1.0;CV += 0.4){
-// 	// 	for(UP=0.1;UP <= 1.0;UP += 0.4){
-// 	// 		for(SE=0;SE <= 1;SE += 0.1){
-// 					RAT=ambgRun(3,CV,UP,SE);
-// 					// fprintf(fp,"%.4f\n",RAT);
-// 			// }
-// 	//	}
-// 	//}
+	// for(CV=0.1;CV <= 1.0;CV += 0.4){
+	// 	for(UP=0.1;UP <= 1.0;UP += 0.4){
+	// 		for(SE=0;SE <= 1;SE += 0.1){
+					RAT=ambgRun(3,CV,UP,SE);
+					// fprintf(fp,"%.4f\n",RAT);
+			// }
+	//	}
+	//}
 	
-// 	ambgDestroy();
-// 	// fclose(fp);
+	ambgDestroy();
+	// fclose(fp);
 
-// 	return RAT;
-// }
+	return RAT;
+}
 /********************************************************************************/
 /********************************************************************************/
 ////////////////////////   Main processing //////////////////////////////////////
 /********************************************************************************/
 /********************************************************************************/
 int main() {
-
-/// loop for collect data ////
+    /// loop for collect data ////
     int loop_n=0;
     printf("Enter number of Collecting RAT info.: ");
     std::cin>>loop_n;
@@ -340,7 +339,12 @@ int main() {
     printf("SE_wifi = %.2f <--- DL=%.2f, UL=%.2f   \n", SE_wifi, downloadRate_wifi, uploadRate_wifi);
     printf("SE_4G = %.2f <--- DL=%.2f, UL=%.2f   \n", SE_4G, downloadRate_4G, uploadRate_4G);
     
-    // Fuzzy_decision(user_pri)
+    
+    //Fuzzy_decision(user_pri)
+        //Just for testing
+    double fuzzy_res;
+    fuzzy_res = Fuzzy_decision(0.1, 0.1, 0.1);
+    printf("%f \n", fuzzy_res);
 
 
     }
