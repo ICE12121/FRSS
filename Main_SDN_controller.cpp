@@ -223,6 +223,16 @@ double Fuzzy_decision(double CV,double UP,double SE) {
 
 	return RAT;
 }
+
+//convert a std::vector<int> to a single double 
+double computeAverage(const std::vector<int>& values) {
+    double sum = 0.0;
+    for (int value : values) {
+        sum += value;
+    }
+    return sum / values.size();
+}
+
 /********************************************************************************/
 /********************************************************************************/
 ////////////////////////   Main processing //////////////////////////////////////
@@ -234,6 +244,8 @@ int main() {
     printf("Enter number of Collecting RAT info.: ");
     std::cin>>loop_n;
     for(int count=1;count<=loop_n;count++){
+    double CV_wifi = -1.0; // Initialization with default values
+    double CV_4G = -1.0;  // Initialization with default values
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////       Collect Data from all RAT         ////////////////////////////////////////////////
@@ -249,7 +261,11 @@ int main() {
         printf("WiFi signal strengths:");
         for (int rssi : rssi_values) {
             printf("%d dBm\n", rssi);
+            int max = -93;
+            CV_wifi = 1-(static_cast<double>(rssi)/max);
+            printf("CV_wifi (check) = %f\n",CV_wifi);
         }
+        
     } else {
         fprintf(stderr, "No RSSI values found.\n");
         return 1;
@@ -297,6 +313,9 @@ int main() {
         printf("SIM signal strength: %s (%d dBm)\n", connectionStatus(dbm).c_str(), dbm);
 
         close(fd); // Close the serial port
+        int max = -93;
+        CV_4G = 1-(static_cast<double>(dbm)/-93);
+        printf("CV_4G (check) = %f\n",CV_4G);
     }
 
     ///////////////////////////////////  Get Data rate from Sim ///////////////////////////////////////
@@ -327,6 +346,11 @@ int main() {
 
     /////////////////////////////////////////////////  user priority //////////////////////////////////////////
     printf("#### Calculate and preparing CV, SE, UP [%d] ##### \n",count);
+    
+    printf("CV_wifi = %.6f\n", CV_wifi);
+
+    printf("CV_4G = %.6f\n", CV_4G);
+
     double UP = random_pri();
     printf("User priority (UP) : %.2f\n", UP);
 
@@ -340,11 +364,31 @@ int main() {
     printf("SE_4G = %.2f <--- DL=%.2f, UL=%.2f   \n", SE_4G, downloadRate_4G, uploadRate_4G);
     
     
+
+
+
     //Fuzzy_decision(user_pri)
         //Just for testing
-    double fuzzy_res;
-    fuzzy_res = Fuzzy_decision(0.1, 0.1, 0.1);
-    printf("%f \n", fuzzy_res);
+    double fuzzy_res_wifi;
+    double fuzzy_res_4G;
+    fuzzy_res_wifi = Fuzzy_decision(CV_wifi, UP, SE_wifi);
+    fuzzy_res_4G = Fuzzy_decision(CV_4G, UP, SE_4G);
+    printf("Fuzzy Result (WiFi): %f \n", fuzzy_res_wifi);
+    printf("Fuzzy Result (4G): %f \n", fuzzy_res_4G);
+
+if (fuzzy_res_4G>fuzzy_res_wifi)
+{
+    printf("The decision result is 4G\n");
+}
+else if (fuzzy_res_wifi > fuzzy_res_4G)
+{
+    printf("The decsion result is WiFi\n");
+}
+else{
+     printf("Using both of its\n");
+}
+   
+
 
 
     }
