@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <chrono>
 #include <fstream>
 #include <string>
 #include <cstring>
@@ -241,6 +242,8 @@ double computeAverage(const std::vector<int>& values) {
 int main() {
     /// loop for collect data ////
     int loop_n=0;
+    // Get starting timepoint
+    auto start = std::chrono::high_resolution_clock::now();
     printf("Enter number of Collecting RAT info.: ");
     std::cin>>loop_n;
     for(int count=1;count<=loop_n;count++){
@@ -333,6 +336,13 @@ int main() {
         fprintf(stderr, "Error: Unable to parse Speedtest result.\n");
     }
 
+    // Get ending timepoint
+    auto stop = std::chrono::high_resolution_clock::now();
+    // Get duration. Substart timepoints to get duration. To cast it to proper unit use duration cast method
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    std::cout << "Time taken by simulation: "
+    << duration.count() << " microseconds" << std::endl;
+
     ///////////////////////////////////  Swiching from 4G to Wifi ///////////////////////////////////////
     // Disable Cellular
     system("sudo nmcli c down ppsim");
@@ -343,6 +353,7 @@ int main() {
 
     system("sudo ifmetric wlan0 600");
     printf("Switched to WiFi connection.\n");
+
 
     /////////////////////////////////////////////////  user priority //////////////////////////////////////////
     printf("#### Calculate and preparing CV, SE, UP [%d] ##### \n",count);
@@ -389,12 +400,34 @@ else{
 }
    
 
+////// Writing values to a text file in C++  /////
+    // CV_wifi, UP, SE_wifi, CV_4G, SE_4G, fuzzy_res_4G, fuzzy_res_wifi;
+    // ... (assume they are calculated somewhere in the code)
+
+    // Open file for output
+    std::ofstream outFile("output_values.txt");
+    if (!outFile) {
+        std::cerr << "Error creating file!" << std::endl;
+        return 1;
+    }
+
+    // Write values to file
+    outFile << "CV_wifi: " << CV_wifi << "\n";
+    outFile << "UP: " << UP << "\n";
+    outFile << "SE_wifi: " << SE_wifi << "\n";
+    outFile << "CV_4G: " << CV_4G << "\n";
+    outFile << "fuzzy_res_4G: " << fuzzy_res_4G << "\n";
+    outFile << "fuzzy_res_wifi: " << fuzzy_res_wifi << "\n";
+
+
+
+    // Close the file
+    outFile.close();
 
 
     }
 
     printf("------ End program -------\n");
-
 
 
     return 0; // Return 0 to indicate successful program execution
