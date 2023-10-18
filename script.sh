@@ -6,7 +6,7 @@ cmrb FLC.fis rules
 
 ./main
 
-# mkpdt filelist result 0 100 10
+mkpdt filelist result 0 1 0.1
 
 chmod +x CV=*.sh
 ./CV=*.sh

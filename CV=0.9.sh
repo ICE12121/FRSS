@@ -1,7 +1,7 @@
 #!/usr/bin/gnuplot
 
 set title "CV=0.9" 
-set xlabel "SE [%]"
+set xlabel "SE [unit]"
 set xrange [0:1]
 set xtics 0,0.1,1
 set yrange [0:1]
@@ -13,10 +13,13 @@ set grid xtics ytics
 set pointsize 1.5 
 #set y2tics font "Helvetica:12"
 set terminal postscript eps "Times-New-Roman" 20 color
-set output "CV=90%.eps"#
-plot "CV=0.9-UP=0.1" using 1:2 lw 6 lt 7 lc rgb "#A70D2A" title "UP=10%" with linespoints,\
-     "CV=0.9-UP=0.5" using 1:2 lw 6 lt 9 lc rgb "#00A36C" title "UP=50%" with linespoints,\
-     "CV=0.9-UP=0.9" using 1:2 lw 6 lt 5 lc rgb "#3090C7" title "UP=90%" with linespoints
+set output "CV=0.9.eps"#
+plot "WIFI-CV=0.9-UP=0.1" using 3:4 lw 6 lt 7 lc rgb "#A70D2A" title "WiFi-UP=0.1" with linespoints,\
+     "WIFI-CV=0.9-UP=0.5" using 3:4 lw 6 lt 9 lc rgb "#A63E0D" title "WiFi-UP=0.5" with linespoints,\
+     "WIFI-CV=0.9-UP=0.9" using 3:4 lw 6 lt 9 lc rgb "#EC8453" title "WiFi-UP=0.9" with linespoints,\
+     "4G-CV=0.9-UP=0.1" using 3:4 lw 6 lt 9 lc rgb "#00A36C" title "4G-UP=0.1" with linespoints,\
+     "4G-CV=0.9-UP=0.5" using 3:4 lw 6 lt 9 lc rgb "#00A36C" title "4G-UP=0.5" with linespoints,\
+     "4G-CV=0.9-UP=0.9" using 3:4 lw 6 lt 5 lc rgb "#50F3BC" title "4G-UP=0.9" with linespoints
 
 set output
 #set output "new1.eps"
