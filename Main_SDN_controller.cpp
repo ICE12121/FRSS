@@ -100,6 +100,25 @@ std::string connectionStatus(int dbm) {
     return "Unknown";
 }
 
+// For Wi-Fi:
+
+// Excellent: -30 to -50 dBm. This is almost the maximum strength you can have for a Wi-Fi signal.
+// Good: -51 to -60 dBm. It's a strong signal, and the connection should work reliably and with good speeds.
+// Fair: -61 to -70 dBm. The signal is okay, but you might start experiencing occasional issues with demanding applications like video calls, streaming, etc.
+// Weak: -71 to -80 dBm. The signal is weak and might not be reliable, especially for data-intensive tasks.
+// Unreliable: -81 to -90 dBm. Connectivity issues and dropouts are likely.
+// No real connection: -91 dBm or worse. It's unlikely you'll maintain a stable connection or even establish one at all.
+
+
+// For 4G (LTE):
+
+// Excellent: -70 dBm or better. Typically, this signal strength would provide the most reliable connection.
+// Good: -71 to -85 dBm. The signal is still strong, and performance should be good.
+// Fair: -86 to -100 dBm. You have a reliable connection, but you might experience slowing down during data-heavy tasks.
+// Poor: -101 to -109 dBm. The signal is weak, leading to unreliable connectivity and slow speeds.
+// Barely usable: -110 to -119 dBm. At this range, the connection is very poor, and data might barely pass through.
+// No real connection: -120 dBm or worse. It's unlikely you'll have any useful connection at this level.
+
 /////////////////////////////////////////////////////////////////// WiFi part ///////////////////////////////////////////////////////
 std::vector<int> getRSSIValues() {
 
@@ -273,8 +292,8 @@ int main() {
         printf("WiFi signal strengths:");
         for (int rssi : rssi_values) {
             printf("%d dBm\n", rssi);
-            int max = -93;
-            CV_wifi = 1-(static_cast<double>(rssi)/max);
+            int max = 60;
+            CV_wifi = ((static_cast<double>(rssi)+90)/max);
             printf("CV_wifi (check) = %f\n",CV_wifi);
         }
         
@@ -325,8 +344,8 @@ int main() {
         printf("SIM signal strength: %s (%d dBm)\n", connectionStatus(dbm).c_str(), dbm);
 
         close(fd); // Close the serial port
-        int max = -93;
-        CV_4G = 1-(static_cast<double>(dbm)/-93);
+        int max = 90;
+        CV_4G = ((static_cast<double>(dbm)+120)/max);
         printf("CV_4G (check) = %f\n",CV_4G);
     }
 
@@ -443,6 +462,17 @@ else{
     // std::ofstream dataFilewifi_CV_90_UP_10("CV=0.9-UP=0.1.txt");
     // std::ofstream dataFilewifi_CV_90_UP_50("CV=0.9-UP=0.5.txt");
     // std::ofstream dataFilewifi_CV_90_UP_90("CV=0.9-UP=0.9.txt");
+                    //     //0 to 0.3 (bad) 0.3 to 0.6 (medium) 0.6 to 0.9 (good)
+                    // if (CV_a_wifi[x] <= 0.3 && CV_a_wifi[x] >= 0.0 && UP_a[x] <= 0.3 && UP_a[x] >= 0.0) {
+
+                    //         dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
+                    // }
+                    // else if (CV_a_wifi[x] <= 0.6 && CV_a_wifi[x] > 0.3 && UP_a[x] <= 0.6 && UP_a[x] > 0.3) {
+
+                    //         dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
+                    // }
+                    // dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
+            
 
     // Save wifi info to text file
     for (int i=1;i<=9;i+=4){
@@ -462,10 +492,11 @@ else{
             
             for (size_t x = 0; x < CV_a_wifi.size(); ++x) { // Use size() method to get the size of the vector
                  // if CV is in the range of i/10-0.05 (ex. 0.05) to i/10 (ex. 0.1) and UP is the range of j/10-0.05 (ex. 0.05) to j/10 (ex. 0.1)
-                    float cv_c = i/10.0;
-                    float cv_c_5 = cv_c-0.05;
-                    float up_c = j/10.0;
-                    float up_c_5 = up_c-0.05;
+                 //0 to 0.3 0.3 to 0.6 0.6 to 0.9
+                    // float cv_c = i/10.0;
+                    // float cv_c_5 = cv_c-0.05;
+                    // float up_c = j/10.0;
+                    // float up_c_5 = up_c-0.05;
                     printf("[WiFi saved]CV is in the range of %f to %f and UP is the range of %f to %f \n",cv_c_5,cv_c, up_c_5 ,up_c );
                     if (CV_a_wifi[x] <= cv_c && CV_a_wifi[x] >= cv_c_5 && UP_a[x] <= up_c && UP_a[x] >= up_c_5) {
 
