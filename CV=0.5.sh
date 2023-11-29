@@ -3,7 +3,7 @@
 set title "CV=0.5" 
 set xlabel "SE [unit]"
 set xrange [0:1]
-set xtics 0,1,100
+set xtics 0,0.1,1
 set yrange [0:1]
 set ytics 0,0.1,1
 set ylabel "RDV [unit]"

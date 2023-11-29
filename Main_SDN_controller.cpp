@@ -442,6 +442,9 @@ else{
 
    printf("------ Saving wifi data -------\n");
     /// loop for saving parameter values 
+
+
+    /////////////////////////////////////////////////////////////////////////////////
 // CV=0.1-UP=0.1
 // CV=0.1-UP=0.5
 // CV=0.1-UP=0.9
@@ -472,42 +475,47 @@ else{
                     //         dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
                     // }
                     // dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
-            
+            /////////////////////////////////////////////////////////////////////////////////
+
+
+            ///////////////////////////////////////////////////////////////////////////////// create and separate the values of parameters for wifi (not finish) /////////////////
 
     // Save wifi info to text file
-    for (int i=1;i<=9;i+=4){
-        for (int j=1;j<=9;j+=4){
-            // Constructing the filename string using string concatenation
-            std::string filename = "WIFI-CV=0." + std::to_string(i) + "-UP=0." + std::to_string(j) + ".txt";
+    // for (int i=1;i<=9;i+=4){
+    //     for (int j=1;j<=9;j+=4){
+    //         // Constructing the filename string using string concatenation
+    //         std::string filename = "WIFI-CV=0." + std::to_string(i) + "-UP=0." + std::to_string(j) + ".txt";
             
-            // Creating the ofstream object and opening the file
-            std::ofstream dataFilewifi;
-            dataFilewifi.open(filename);  // open the file with the constructed name
+    //         // Creating the ofstream object and opening the file
+    //         std::ofstream dataFilewifi;
+    //         dataFilewifi.open(filename);  // open the file with the constructed name
             
-            // Check if the file opened successfully
-            if (!dataFilewifi) {
-                std::cerr << "Cannot open the output file: " << filename << std::endl;
-                return 1;  // Return or handle the error as needed
-            }
+    //         // Check if the file opened successfully
+    //         if (!dataFilewifi) {
+    //             std::cerr << "Cannot open the output file: " << filename << std::endl;
+    //             return 1;  // Return or handle the error as needed
+    //         }
             
-            for (size_t x = 0; x < CV_a_wifi.size(); ++x) { // Use size() method to get the size of the vector
-                 // if CV is in the range of i/10-0.05 (ex. 0.05) to i/10 (ex. 0.1) and UP is the range of j/10-0.05 (ex. 0.05) to j/10 (ex. 0.1)
-                 //0 to 0.3 0.3 to 0.6 0.6 to 0.9
-                    // float cv_c = i/10.0;
-                    // float cv_c_5 = cv_c-0.05;
-                    // float up_c = j/10.0;
-                    // float up_c_5 = up_c-0.05;
-                    printf("[WiFi saved]CV is in the range of %f to %f and UP is the range of %f to %f \n",cv_c_5,cv_c, up_c_5 ,up_c );
-                    if (CV_a_wifi[x] <= cv_c && CV_a_wifi[x] >= cv_c_5 && UP_a[x] <= up_c && UP_a[x] >= up_c_5) {
+    //         for (size_t x = 0; x < CV_a_wifi.size(); ++x) { // Use size() method to get the size of the vector
+    //              // if CV is in the range of i/10-0.05 (ex. 0.05) to i/10 (ex. 0.1) and UP is the range of j/10-0.05 (ex. 0.05) to j/10 (ex. 0.1)
+    //              //0 to 0.3 0.3 to 0.6 0.6 to 0.9
+    //                 // float cv_c = i/10.0;
+    //                 // float cv_c_5 = cv_c-0.05;
+    //                 // float up_c = j/10.0;
+    //                 // float up_c_5 = up_c-0.05;
+    //                 printf("[WiFi saved]CV is in the range of %f to %f and UP is the range of %f to %f \n",cv_c_5,cv_c, up_c_5 ,up_c );
+    //                 if (CV_a_wifi[x] <= cv_c && CV_a_wifi[x] >= cv_c_5 && UP_a[x] <= up_c && UP_a[x] >= up_c_5) {
 
-                            dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
-                    }
+    //                         dataFilewifi << CV_a_wifi[x] << " " << UP_a[x] << " " << SE_a_wifi[x] << " " << fuzzy_re_a_wifi[x] << "\n";
+    //                 }
             
-            }
-            // Don't forget to close the file
-            dataFilewifi.close();
-        }  
-    }
+    //         }
+    //         // Don't forget to close the file
+    //         dataFilewifi.close();
+    //     }  
+    // }
+
+            /////////////////////////////////////////////////////////////////////////////////
 
     std::ofstream dataFilewifiall("data_wifi.txt");
     // Check if the file stream is open/valid.
@@ -522,38 +530,41 @@ else{
   dataFilewifiall.close();
 
 printf("------ Saving 4G data -------\n");
+           ///////////////////////////////////////////////////////////////////////////////// create and separate the values of parameters for 4G (not finish) /////////////////
     // Save 4G info to text file
-        for (int i=1;i<=9;i+=4){
-        for (int j=1;j<=9;j+=4){
-            // Constructing the filename string using string concatenation
-            std::string filename = "4G-CV=0." + std::to_string(i) + "-UP=0." + std::to_string(j) + ".txt";
+    //     for (int i=1;i<=9;i+=4){
+    //     for (int j=1;j<=9;j+=4){
+    //         // Constructing the filename string using string concatenation
+    //         std::string filename = "4G-CV=0." + std::to_string(i) + "-UP=0." + std::to_string(j) + ".txt";
             
-            // Creating the ofstream object and opening the file
-            std::ofstream dataFile4G;
-            dataFile4G.open(filename);  // open the file with the constructed name
+    //         // Creating the ofstream object and opening the file
+    //         std::ofstream dataFile4G;
+    //         dataFile4G.open(filename);  // open the file with the constructed name
             
-            // Check if the file opened successfully
-            if (!dataFile4G) {
-                std::cerr << "Cannot open the output file: " << filename << std::endl;
-                return 1;  // Return or handle the error as needed
-            }
+    //         // Check if the file opened successfully
+    //         if (!dataFile4G) {
+    //             std::cerr << "Cannot open the output file: " << filename << std::endl;
+    //             return 1;  // Return or handle the error as needed
+    //         }
             
-            for (size_t x = 0; x < CV_a_4G.size(); ++x) { // Use size() method to get the size of the vector
-                  // if CV is in the range of i/10-0.05 (ex. 0.05) to i/10 (ex. 0.1) and UP is the range of j/10-0.05 (ex. 0.05) to j/10 (ex. 0.1)
-                    float cv_c = i/10.0;
-                    float cv_c_5 = cv_c-0.05;
-                    float up_c = j/10.0;
-                    float up_c_5 = up_c-0.05;
-                    printf("[4G saved]CV is in the range of %f to %f and UP is the range of %f to %f \n",cv_c_5,cv_c, up_c_5 ,up_c );
-                    if (CV_a_4G[x] <= cv_c && CV_a_wifi[x] > up_c_5 && UP_a[x] <= up_c && UP_a[x] > cv_c_5) {
-                            dataFile4G << CV_a_4G[x] << " " << UP_a[x] << " " << SE_a_4G[x] << " " << fuzzy_re_a_4G[x] << "\n";
-                    }
+    //         for (size_t x = 0; x < CV_a_4G.size(); ++x) { // Use size() method to get the size of the vector
+    //               // if CV is in the range of i/10-0.05 (ex. 0.05) to i/10 (ex. 0.1) and UP is the range of j/10-0.05 (ex. 0.05) to j/10 (ex. 0.1)
+    //                 float cv_c = i/10.0;
+    //                 float cv_c_5 = cv_c-0.05;
+    //                 float up_c = j/10.0;
+    //                 float up_c_5 = up_c-0.05;
+    //                 printf("[4G saved]CV is in the range of %f to %f and UP is the range of %f to %f \n",cv_c_5,cv_c, up_c_5 ,up_c );
+    //                 if (CV_a_4G[x] <= cv_c && CV_a_wifi[x] > up_c_5 && UP_a[x] <= up_c && UP_a[x] > cv_c_5) {
+    //                         dataFile4G << CV_a_4G[x] << " " << UP_a[x] << " " << SE_a_4G[x] << " " << fuzzy_re_a_4G[x] << "\n";
+    //                 }
             
-            }
-            // Don't forget to close the file
-            dataFile4G.close();
-        }  
-    }
+    //         }
+    //         // Don't forget to close the file
+    //         dataFile4G.close();
+    //     }  
+    // }
+
+               /////////////////////////////////////////////////////////////////////////////////
 
     std::ofstream dataFile4Gall("data_4G.txt");
     // Check if the file stream is open/valid.
