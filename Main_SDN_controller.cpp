@@ -323,7 +323,7 @@ int main() {
     system("sudo ifmetric wlan0 1000");
 
     // Enable Cellular
-    system("sudo nmcli c up ppsim");
+    system("sudo nmcli c up nipponsim");
     // Introduce a 10-second delay before enabling Cellular
     sleep(60);
 
@@ -373,7 +373,7 @@ int main() {
 
     ///////////////////////////////////  Swiching from 4G to Wifi ///////////////////////////////////////
     // Disable Cellular
-    system("sudo nmcli c down ppsim");
+    system("sudo nmcli c down nipponsim");
 
     // Enable Wi-Fi
     // system("nmcli c up INALAB_5G");
